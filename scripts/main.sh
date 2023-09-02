@@ -35,7 +35,7 @@ main() {
 
   # Check for version
   if ! op::verify_version; then
-      return 0
+    return 0
   fi
 
   # Verify current session
@@ -50,7 +50,7 @@ main() {
 
   selected_item="$(echo "$items" | awk -F ',' '{ print $1 }' | fzf "${fzf_opts[@]}")"
 
-  if [[ -n "$selected_item" ]]; then
+  if [[ -n $selected_item ]]; then
     selected_item_name=${selected_item#*,}
     selected_item_uuid="$(echo "$items" | grep "^$selected_item_name," | awk -F ',' '{ print $2 }')"
 

@@ -23,9 +23,9 @@ op::verify_version() {
 }
 
 op::verify_session() {
-  local connected_accounts_count="$(( $(op account list | wc -l) - 1 ))"
+  local connected_accounts_count="$(($(op account list | wc -l) - 1))"
 
-  if [[ "$connected_accounts_count" -le 0 ]]; then
+  if [[ $connected_accounts_count -le 0 ]]; then
     prompt::ask "You haven't added any accounts to 1Password CLI. Would you like to add one now?"
 
     if prompt::answer_is_yes; then
@@ -53,17 +53,17 @@ op::signin() {
     --force \
     --raw \
     --account="$(options::op_account)" \
-    --session="$(op::get_session)" > "$TMP_TOKEN_FILE"
+    --session="$(op::get_session)" >"$TMP_TOKEN_FILE"
 
   exit_code=$?
 
   tput clear
 
-  return $exit_code
+  return "$exit_code"
 }
 
 op::get_session() {
-  cat "$TMP_TOKEN_FILE" 2> /dev/null
+  cat "$TMP_TOKEN_FILE" 2>/dev/null
 }
 
 op::get_all_items() {
@@ -71,20 +71,20 @@ op::get_all_items() {
   # Returned JSON structure reference:
   # https://developer.1password.com/docs/cli/item-template-json
 
-  local -r JQ_FILTER="
-    .[]
-    | [
+  local -r JQ_FILTER='
+  .[]
+  | [
         select(
-          (.category == \"LOGIN\") or
-          (.category == \"PASSWORD\")
+          (.category == "LOGIN") or
+          (.category == "PASSWORD")
         )?
       ]
     | map(
-        [ .title, .id ]
-        | join(\",\")
-      )
+      [ .title, .id ]
+      | join(",")
+    )
     | .[]
-  "
+    '
 
   op item list \
     --cache \
@@ -93,7 +93,7 @@ op::get_all_items() {
     --tags="$(options::op_filter_tags)" \
     --vault="$(options::op_valut)" \
     --session="$(op::get_session)" \
-    2> /dev/null \
+    2>/dev/null \
     | jq "$JQ_FILTER" --raw-output
 }
 
@@ -105,19 +105,19 @@ op::get_item_password() {
   #
   # In case there are multiple items, we'll take the first one that matches our criteria.
 
-  local -r JQ_FILTER="
-      # For cases where we might get a single item - we always want to start with an array
-      [.] + [] | flatten
+  local -r JQ_FILTER='
+    # For cases where we might get a single item - we always want to start with an array
+    [.] + [] | flatten
 
-      # Select the items whose purpose is... being a password
-      | map(select(.purpose == \"PASSWORD\"))
+    # Select the items whose purpose is... being a password
+    | map(select(.purpose == "PASSWORD"))
 
-      # Select the first one
-      | .[0]
+    # Select the first one
+    | .[0]
 
-      # Return the value
-      | .value
-    "
+    # Return the value
+    | .value
+    '
 
   op item get "$ITEM_UUID" \
     --cache \
@@ -133,14 +133,14 @@ op::get_item_totp() {
   # In this case, the structure looks very similar to the password section, but the type of "OTP".
 
   local -r JQ_FILTER="
-      # For cases where we might get a single item - we always want to start with an array
-      [.] + [] | flatten
+    # For cases where we might get a single item - we always want to start with an array
+    [.] + [] | flatten
 
-      # Select the first one
-      | .[0]
+    # Select the first one
+    | .[0]
 
-      # Return the value
-      | .totp
+    # Return the value
+    | .totp
     "
 
   op item get "$ITEM_UUID" \

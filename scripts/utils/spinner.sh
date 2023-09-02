@@ -24,11 +24,11 @@ __start_spinner() {
   while true; do
     current_symbol="${FRAMES:i++%${#FRAMES}:1}"
 
-    printf "\\e[0;34m%s\\e[0m  %s" "$current_symbol" "$MSG"
+    printf '\e[0;34m%s\e[0m  %s' "$current_symbol" "$MSG"
 
-    printf "\\r"
+    printf '\r'
 
-    sleep $DELAY
+    sleep "$DELAY"
   done
 
   return $?
@@ -51,6 +51,6 @@ spinner::stop() {
   fi
 
   tput cnorm
-  kill "$__SPINNER_PID" &> /dev/null
+  kill "$__SPINNER_PID" &>/dev/null
   __SPINNER_PID=""
 }

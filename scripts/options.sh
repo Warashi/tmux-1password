@@ -18,7 +18,7 @@ options::keybinding() {
 }
 
 options::op_account() {
-  if [[ -n "$__DEPRECATED_OPT_SUBDOMAIN" ]]; then
+  if [[ -n $__DEPRECATED_OPT_SUBDOMAIN ]]; then
     echo "$__DEPRECATED_OPT_SUBDOMAIN"
   else
     echo "$OPT_ACCOUNT"
@@ -34,11 +34,11 @@ options::op_filter_tags() {
 }
 
 options::copy_to_clipboard() {
-  [[ "$OPT_COPY_TO_CLIPBOARD" == "on" ]]
+  [[ $OPT_COPY_TO_CLIPBOARD == "on" ]]
   return $?
 }
 
 options::debug_mode() {
-  [[ "$OPT_DEBUG" == "on" ]]
+  [[ $OPT_DEBUG == "on" ]]
   return $?
 }
