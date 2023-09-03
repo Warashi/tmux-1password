@@ -47,11 +47,7 @@ op::verify_session() {
 }
 
 op::signin() {
-  op signin \
-    --cache \
-    --force \
-    --raw \
-    --account="$(options::op_account)" >/dev/null
+  op signin
 
   exit_code=$?
 
