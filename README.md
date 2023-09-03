@@ -1,6 +1,6 @@
 # tmux-1password
 
-[![Build Status](https://github.com/yardnsm/tmux-1password/workflows/main/badge.svg)](https://github.com/yardnsm/tmux-1password/actions)
+[![Build Status](https://github.com/Warashi/tmux-1password/workflows/main/badge.svg)](https://github.com/Warashi/tmux-1password/actions)
 
 > Access your 1Password login items within tmux!
 
@@ -13,6 +13,7 @@ for personal 1Password accounts, as well as teams accounts.
 
 This plugin relies on the following:
 
+- [1Password Desktop app](https://support.1password.com/get-the-apps/) >= 8 and enabled desktop app integration
 - [1Password CLI](https://developer.1password.com/docs/cli) >= 2.0.0
 - [fzf](https://github.com/junegunn/fzf)
 - [jq](https://stedolan.github.io/jq/)
@@ -30,7 +31,7 @@ In any tmux mode:
 1. Add plugin to the list of TPM plugins in `.tmux.conf`:
 
     ```
-    set -g @plugin 'yardnsm/tmux-1password'
+    set -g @plugin 'Warashi/tmux-1password'
     ```
 
 2. Hit `prefix + I` to fetch the plugin and source it. You should now be able to use the plugin.
@@ -40,7 +41,7 @@ In any tmux mode:
 1. Clone this repo:
 
     ```console
-    $ git clone https://github.com/yardnsm/tmux-1password ~/some/path
+    $ git clone https://github.com/Warashi/tmux-1password ~/some/path
     ```
 
 2. Source the plugin in your `.tmux.conf` by adding the following to the bottom of the file:
@@ -54,15 +55,6 @@ In any tmux mode:
     ```console
     $ tmux source-file ~/.tmux.conf
     ```
-
-### Using older versions of 1Password's CLI
-
-If you're using an older version of the CLI (`< 2.0`), you can use this plugin via the
-[`legacy`](https://github.com/yardnsm/tmux-1password/tree/legacy) branch. For example, using TPM:
-
-```
-set -g @plugin 'yardnsm/tmux-1password#legacy'
-```
 
 ## Usage
 
@@ -170,4 +162,6 @@ Also see:
 
 ## License
 
-MIT © [Yarden Sod-Moriah](http://yardnsm.net/)
+MIT © [Yarden Sod-Moriah](http://Warashi.net/)
+MIT © [Shinnosuke Sawada](https://warashi.dev/)
+

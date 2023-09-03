@@ -3,7 +3,6 @@
 # ------------------------------------------------------------------------------
 
 declare -r EXPECTED_MIN_OP_CLI_VERSION="2.0.0"
-declare -r TMP_TOKEN_FILE="$HOME/.op_tmux_token_tmp"
 
 # ------------------------------------------------------------------------------
 
@@ -52,18 +51,13 @@ op::signin() {
     --cache \
     --force \
     --raw \
-    --account="$(options::op_account)" \
-    --session="$(op::get_session)" >"$TMP_TOKEN_FILE"
+    --account="$(options::op_account)" >/dev/null
 
   exit_code=$?
 
   tput clear
 
   return "$exit_code"
-}
-
-op::get_session() {
-  cat "$TMP_TOKEN_FILE" 2>/dev/null
 }
 
 op::get_all_items() {
@@ -92,7 +86,6 @@ op::get_all_items() {
     --categories="LOGIN,PASSWORD" \
     --tags="$(options::op_filter_tags)" \
     --vault="$(options::op_valut)" \
-    --session="$(op::get_session)" \
     2>/dev/null \
     | jq "$JQ_FILTER" --raw-output
 }
@@ -123,7 +116,6 @@ op::get_item_password() {
     --cache \
     --fields type=concealed \
     --format json \
-    --session="$(op::get_session)" \
     | jq "$JQ_FILTER" --raw-output
 }
 
@@ -147,6 +139,5 @@ op::get_item_totp() {
     --cache \
     --fields type=otp \
     --format json \
-    --session="$(op::get_session)" \
     | jq "$JQ_FILTER" --raw-output
 }
