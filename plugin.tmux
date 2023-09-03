@@ -32,7 +32,7 @@ main() {
 
   # check for a session named op, if there is none, create one
   op=0
-  if ! eval "$(tmux has-session -t op 2>/dev/null)"
+  if ! tmux has-session -t op 2>/dev/null
   then
     op=$(tmux new-session -s op -n op -d -P -F '#{pane_id}')
   else
